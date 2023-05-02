@@ -1,5 +1,7 @@
 package entity;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "student_table")
@@ -11,12 +13,8 @@ public class Student {
     private String studentName;
 
     //------------mapping-----------
-    @OneToMany(mappedBy = "student",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<Laptop> laptops;
-
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses=new ArrayList<>();
     //------------mapping-----------
 
 
@@ -26,6 +24,14 @@ public class Student {
     public Student(long studentId, String studentName) {
         this.studentId = studentId;
         this.studentName = studentName;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public long getStudentId() {
@@ -44,11 +50,4 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public List<Laptop> getLaptops() {
-        return laptops;
-    }
-
-    public void setLaptops(List<Laptop> laptops) {
-        this.laptops = laptops;
-    }
 }
